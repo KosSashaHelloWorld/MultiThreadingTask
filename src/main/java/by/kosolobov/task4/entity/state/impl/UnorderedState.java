@@ -6,26 +6,26 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DeliveredState implements BasePackageState {
-    private static final Logger log = LogManager.getLogger(DeliveredState.class);
+public class UnorderedState implements BasePackageState {
+    private static final Logger log = LogManager.getLogger(UnorderedState.class);
 
     @Override
     public void next(BasePackage pkg) {
-        pkg.setState(new ReceivedState());
-    }
-
-    @Override
-    public void prev(BasePackage pkg) {
         pkg.setState(new OrderedState());
     }
 
     @Override
+    public void prev(BasePackage pkg) {
+        log.log(Level.WARN, "Package is unordered.");
+    }
+
+    @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package was delivered to office, waiting for receiver.");
+        log.log(Level.INFO, "Package is unordered");
     }
 
     @Override
     public String toString() {
-        return "delivered";
+        return "unordered";
     }
 }
