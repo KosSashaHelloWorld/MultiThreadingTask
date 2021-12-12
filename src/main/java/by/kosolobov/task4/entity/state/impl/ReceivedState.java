@@ -11,7 +11,7 @@ public class ReceivedState implements BasePackageState {
 
     @Override
     public void next(BasePackage pkg) {
-        log.log(Level.WARN, "Package already received.");
+        log.log(Level.WARN, "Package was already received.");
     }
 
     @Override
@@ -21,11 +21,11 @@ public class ReceivedState implements BasePackageState {
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package received");
+        log.log(Level.INFO, "Package was received");
     }
 
     @Override
     public String toString() {
-        return String.format("received");
+        return "received";
     }
 }

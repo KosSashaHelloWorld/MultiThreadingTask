@@ -16,16 +16,16 @@ public class OrderedState implements BasePackageState {
 
     @Override
     public void prev(BasePackage pkg) {
-        log.log(Level.WARN, "Package is in its` root state.");
+        pkg.setState(new UnorderedState());
     }
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package ordered, not delivered to office yet.");
+        log.log(Level.INFO, "Package was ordered, not delivered to office yet.");
     }
 
     @Override
     public String toString() {
-        return String.format("ordered");
+        return "ordered";
     }
 }
