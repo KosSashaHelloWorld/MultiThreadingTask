@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 class LogisticBaseTest {
 
@@ -54,16 +53,15 @@ class LogisticBaseTest {
     @Test
     void multiDeliver() {
         PackageFactory packageFactory = new PackageFactory();
-        List<BasePackage> EXPECTED = new ArrayList<>();
+        List<BasePackage> packages = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            EXPECTED.add(packageFactory.getRandomPackage());
+            packages.add(packageFactory.getBigPackage());
         }
-        var packages = EXPECTED.subList(0, EXPECTED.size());
 
         VanFactory vanFactory = new VanFactory();
         List<BaseVan> vans = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            vans.add(vanFactory.getRandomVan());
+            vans.add(vanFactory.getSmallVan());
         }
 
         LogisticBase base = LogisticBase.getInstance();
@@ -71,6 +69,8 @@ class LogisticBaseTest {
             van.loadAll(packages);
             van.deliverTo(base);
         }
+
+        assertTrue(packages.isEmpty());
 
         await().until(() -> base.getMainGarage().size() == 5);
 

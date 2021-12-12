@@ -64,7 +64,10 @@ public abstract class BaseVan extends Thread {
         for (BasePackage pkg : packages) {
             load(pkg);
         }
-        packages.removeAll(storage);
+
+        for (BasePackage pkg : storage) {
+            packages.remove(pkg);
+        }
     }
 
     public void deliverTo(LogisticBase destination) {
