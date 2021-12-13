@@ -1,7 +1,7 @@
 package by.kosolobov.task4.entity.van;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.impl.BigPackage;
+import by.kosolobov.task4.entity.packages.BigPackage;
 import by.kosolobov.task4.factory.VanFactory;
 import org.junit.jupiter.api.Test;
 
