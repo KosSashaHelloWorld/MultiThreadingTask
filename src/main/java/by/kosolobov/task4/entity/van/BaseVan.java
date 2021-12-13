@@ -49,7 +49,7 @@ public abstract class BaseVan extends Thread {
         return stored + pkg.getWeight() <= storageLimit;
     }
 
-    public void load(BasePackage pkg) {
+    private void load(BasePackage pkg) {
         if (hasSpaceFor(pkg)) {
             try {
                 unit.sleep(200);

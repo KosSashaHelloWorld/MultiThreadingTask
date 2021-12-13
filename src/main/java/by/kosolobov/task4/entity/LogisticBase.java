@@ -1,7 +1,6 @@
 package by.kosolobov.task4.entity;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.state.impl.OrderedState;
 import by.kosolobov.task4.entity.van.BaseVan;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -74,11 +73,7 @@ public class LogisticBase {
             mainGarage.remove(currentVan);
         }
 
-        for (BasePackage pkg : mainStorage) {
-            if (pkg.getState() instanceof OrderedState) {
-                currentVan.load(pkg);
-            }
-        }
+        currentVan.loadAll(mainStorage);
 
         log.log(Level.INFO, "{} is loaded.", currentVan);
         locker.unlock();

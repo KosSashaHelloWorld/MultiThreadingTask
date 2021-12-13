@@ -31,13 +31,15 @@ class LogisticBaseTest {
         //Logistic Base ordering simulation
         pkg1.nextState();
         pkg2.nextState();
+        List<BasePackage> packages = new ArrayList<>();
+        packages.add(pkg1);
+        packages.add(pkg2);
 
         assertInstanceOf(OrderedState.class, pkg1.getState());
         assertInstanceOf(OrderedState.class, pkg2.getState());
 
         BaseVan van = new SmallVan();
-        van.load(pkg1);
-        van.load(pkg2);
+        van.loadAll(packages);
         van.deliverTo(base);
 
         await().until(() -> base.getMainGarage().size() == 1);
