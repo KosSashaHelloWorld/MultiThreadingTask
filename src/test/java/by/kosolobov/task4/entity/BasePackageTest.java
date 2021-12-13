@@ -1,13 +1,15 @@
 package by.kosolobov.task4.entity;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.impl.BigPackage;
+import by.kosolobov.task4.entity.packages.BigPackage;
 import by.kosolobov.task4.entity.state.impl.DeliveredState;
 import by.kosolobov.task4.entity.state.impl.OrderedState;
 import by.kosolobov.task4.entity.state.impl.ReceivedState;
+import by.kosolobov.task4.entity.state.impl.UnorderedState;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BasePackageTest {
 
@@ -17,25 +19,27 @@ class BasePackageTest {
 
         BasePackage pack = new BigPackage();
 
-        assertTrue(pack.getState() instanceof OrderedState);
+        assertInstanceOf(UnorderedState.class, pack.getState());
         pack.nextState();
-
-        assertTrue(pack.getState() instanceof DeliveredState);
+        assertInstanceOf(OrderedState.class, pack.getState());
         pack.nextState();
+        assertInstanceOf(DeliveredState.class, pack.getState());
+        pack.nextState();
+        assertInstanceOf(ReceivedState.class, pack.getState());
 
-        assertTrue(pack.getState() instanceof ReceivedState);
         pack.prevState();
-
-        assertTrue(pack.getState() instanceof DeliveredState);
+        assertInstanceOf(DeliveredState.class, pack.getState());
         pack.prevState();
-
-        assertTrue(pack.getState() instanceof OrderedState);
+        assertInstanceOf(OrderedState.class, pack.getState());
+        pack.prevState();
+        assertInstanceOf(UnorderedState.class, pack.getState());
     }
 
     @Test
     void checkLogs() {
         BasePackage pack = new BigPackage();
 
+        pack.prevState();
         pack.printStatus();
         pack.nextState();
         pack.printStatus();
@@ -43,6 +47,7 @@ class BasePackageTest {
         pack.printStatus();
         pack.nextState();
         pack.printStatus();
+        pack.nextState();
 
         //without assertions: check logs
         assertTrue(true);

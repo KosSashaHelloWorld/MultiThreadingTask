@@ -1,46 +1,64 @@
 package by.kosolobov.task4.entity;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.impl.BigPackage;
+import by.kosolobov.task4.entity.packages.BigPackage;
+import by.kosolobov.task4.entity.state.impl.DeliveredState;
+import by.kosolobov.task4.entity.state.impl.OrderedState;
+import by.kosolobov.task4.entity.state.impl.UnorderedState;
 import by.kosolobov.task4.entity.van.BaseVan;
 import by.kosolobov.task4.entity.van.SmallVan;
 import by.kosolobov.task4.factory.PackageFactory;
 import by.kosolobov.task4.factory.VanFactory;
-import by.kosolobov.task4.sevice.VanService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.jayway.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class LogisticBaseTest {
 
     @Test
     void deliverVanTo() {
+        LogisticBase base = LogisticBase.getInstance();
         BasePackage pkg1 = new BigPackage();
         BasePackage pkg2 = new BigPackage();
 
-        BaseVan van = new SmallVan();
+        assertInstanceOf(UnorderedState.class, pkg1.getState());
+        assertInstanceOf(UnorderedState.class, pkg2.getState());
 
+        //Logistic Base ordering simulation
+        pkg1.nextState();
+        pkg2.nextState();
+
+        assertInstanceOf(OrderedState.class, pkg1.getState());
+        assertInstanceOf(OrderedState.class, pkg2.getState());
+
+        BaseVan van = new SmallVan();
         van.load(pkg1);
         van.load(pkg2);
-
-        LogisticBase base = new LogisticBase();
-
         van.deliverTo(base);
 
-        assertTrue(base.getTemporalStorage().contains(pkg1));
-        assertTrue(base.getTemporalStorage().contains(pkg2));
+        await().until(() -> base.getMainGarage().size() == 1);
+
+        assertSame(2, base.getTemporalStorage().size());
+        assertInstanceOf(DeliveredState.class, base.getTemporalStorage().get(0).getState());
+        assertInstanceOf(DeliveredState.class, base.getTemporalStorage().get(1).getState());
+
+        base.getMainGarage().clear();
+        base.getTemporalStorage().clear();
     }
 
     @Test
-    void multiDeliver() throws InterruptedException {
+    void multiDeliver() {
         PackageFactory packageFactory = new PackageFactory();
-        List<BasePackage> packages = new ArrayList<>();
+        List<BasePackage> EXPECTED = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            packages.add(packageFactory.getRandomPackage());
+            EXPECTED.add(packageFactory.getRandomPackage());
         }
+        var packages = EXPECTED.subList(0, EXPECTED.size());
 
         VanFactory vanFactory = new VanFactory();
         List<BaseVan> vans = new ArrayList<>();
@@ -48,20 +66,17 @@ class LogisticBaseTest {
             vans.add(vanFactory.getRandomVan());
         }
 
+        LogisticBase base = LogisticBase.getInstance();
         for (BaseVan van : vans) {
             van.loadAll(packages);
+            van.deliverTo(base);
         }
 
-        LogisticBase base = new LogisticBase();
-        for (BaseVan van : vans) {
-            van.setDestination(base);
-            van.execute();
-        }
+        await().until(() -> base.getMainGarage().size() == 5);
 
-        Thread.sleep(15000);
+        assertSame(10, base.getTemporalStorage().size());
 
-        System.out.println(base.getTemporalStorage());
-        System.out.println(base.getTemporalStorage().size());
-        System.out.println(base.getGarage());
+        base.getMainGarage().clear();
+        base.getTemporalStorage().clear();
     }
 }

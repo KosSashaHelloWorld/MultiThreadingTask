@@ -2,13 +2,14 @@ package by.kosolobov.task4.entity.packages.impl;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
 import by.kosolobov.task4.entity.state.BasePackageState;
-import by.kosolobov.task4.entity.state.impl.UnorderedState;
+import by.kosolobov.task4.entity.state.impl.OrderedState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BigPackage implements BasePackage {
+    private static final Logger log = LogManager.getLogger(BigPackage.class);
     private static final int WEIGHT = 100;
-    private BasePackageState state = new UnorderedState();
+    private BasePackageState state = new OrderedState();
 
     @Override
     public void printStatus() {
