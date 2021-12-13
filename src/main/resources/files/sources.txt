@@ -1,0 +1,4 @@
+There are examples of custom package and custom van information storing
+p500
+v500,120
+these lines doesn't make mistakes

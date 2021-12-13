@@ -29,6 +29,17 @@ public abstract class BaseVan extends Thread {
         this.destination = destination;
     }
 
+
+    /**
+     * Created for testing.
+     * @return subList of storage
+     * @deprecated
+     */
+    @Deprecated (since = "it was created")
+    public List<BasePackage> getStorage() {
+        return storage.subList(0, storage.size());
+    }
+
     public boolean hasSpaceFor(BasePackage pkg) {
         int stored = 0;
         for (BasePackage inVan : storage) {
@@ -58,7 +69,6 @@ public abstract class BaseVan extends Thread {
 
     public void deliverTo(LogisticBase destination) {
         setDestination(destination);
-        log.log(Level.INFO, "{} moving to {}.", this, destination);
         service.execute(this);
     }
 
@@ -78,13 +88,13 @@ public abstract class BaseVan extends Thread {
             log.log(Level.ERROR, "{} was interrupted while unloading {}: {}", this, toUnload, e.getMessage());
         }
         storage.remove(toUnload);
-        toUnload.nextState();
 
         return toUnload;
     }
 
     @Override
     public void run() {
+        log.log(Level.INFO, "{} moving to {}.", this, destination);
         try {
             unit.sleep(60000 / speed);
         } catch (InterruptedException e) {

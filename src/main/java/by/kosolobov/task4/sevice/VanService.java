@@ -1,7 +1,6 @@
 package by.kosolobov.task4.sevice;
 
 import by.kosolobov.task4.entity.van.BaseVan;
-import by.kosolobov.task4.factory.VanFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
