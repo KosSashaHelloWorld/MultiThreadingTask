@@ -2,7 +2,6 @@ package by.kosolobov.task4.entity.van;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
 import by.kosolobov.task4.entity.packages.BigPackage;
-import by.kosolobov.task4.factory.VanFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-class BaseVanTest {
+class BaseVanTypeTest {
 
     @Test
     void load() {
@@ -22,8 +21,7 @@ class BaseVanTest {
         packages.add(pkg2);
         packages.add(pkg3);
 
-        VanFactory factory = new VanFactory();
-        BaseVan van = factory.getSmallVan();
+        Van van = new Van(VanType.SMALL);
 
         van.loadAll(packages);
 

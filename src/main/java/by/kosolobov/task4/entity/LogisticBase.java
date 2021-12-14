@@ -1,7 +1,7 @@
 package by.kosolobov.task4.entity;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.van.BaseVan;
+import by.kosolobov.task4.entity.van.Van;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,9 +16,9 @@ public class LogisticBase {
     private static LogisticBase instance = null;
     private final List<BasePackage> mainStorage = new ArrayList<>();
     private final List<BasePackage> temporalStorage = new ArrayList<>();
-    private final List<BaseVan> temporalGarage = new ArrayList<>();
-    private final List<BaseVan> mainGarage = new ArrayList<>();
-    private BaseVan currentVan;
+    private final List<Van> temporalGarage = new ArrayList<>();
+    private final List<Van> mainGarage = new ArrayList<>();
+    private Van currentVan;
 
     private LogisticBase() {
     }
@@ -40,11 +40,11 @@ public class LogisticBase {
         return temporalStorage.subList(0, temporalStorage.size());
     }
 
-    public List<BaseVan> getMainGarage() {
+    public List<Van> getMainGarage() {
         return mainGarage.subList(0, mainGarage.size());
     }
 
-    public List<BaseVan> getTemporalGarage() {
+    public List<Van> getTemporalGarage() {
         return temporalGarage.subList(0, temporalGarage.size());
     }
 
@@ -79,7 +79,7 @@ public class LogisticBase {
         locker.unlock();
     }
 
-    public void notifyVanArrived(BaseVan van) {
+    public void notifyVanArrived(Van van) {
         locker.lock();
         if (currentVan == null) {
             currentVan = van;

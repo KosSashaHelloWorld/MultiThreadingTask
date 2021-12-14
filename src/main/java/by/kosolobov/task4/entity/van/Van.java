@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public abstract class BaseVan extends Thread {
-    private static final Logger log = LogManager.getLogger(BaseVan.class);
+import static by.kosolobov.task4.entity.van.VanType.DEFAULT;
+
+public class Van extends Thread {
+    private static final Logger log = LogManager.getLogger(Van.class);
     private static final VanService service = new VanService();
     final int storageLimit;
     final int speed;
@@ -20,7 +22,17 @@ public abstract class BaseVan extends Thread {
     private final List<BasePackage> storage = new ArrayList<>();
     private LogisticBase destination = null;
 
-    protected BaseVan(int storageLimit, int speed) {
+    public Van() {
+        storageLimit = DEFAULT.getStorageLimit();
+        speed = DEFAULT.getSpeed();
+    }
+
+    public Van(VanType type) {
+        storageLimit = type.getStorageLimit();
+        speed = type.getSpeed();
+    }
+
+    public Van(int storageLimit, int speed) {
         this.storageLimit = storageLimit;
         this.speed = speed;
     }
@@ -113,10 +125,10 @@ public abstract class BaseVan extends Thread {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BaseVan baseVan = (BaseVan) o;
+        Van van = (Van) o;
 
-        if (storageLimit != baseVan.storageLimit) return false;
-        return speed == baseVan.speed;
+        if (storageLimit != van.storageLimit) return false;
+        return speed == van.speed;
     }
 
     @Override
@@ -124,5 +136,10 @@ public abstract class BaseVan extends Thread {
         int result = storageLimit;
         result = 31 * result + speed;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Van{storage:%d, speed:%d}", storageLimit, speed);
     }
 }

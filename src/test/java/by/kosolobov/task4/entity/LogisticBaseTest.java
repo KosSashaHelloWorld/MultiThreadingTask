@@ -5,10 +5,9 @@ import by.kosolobov.task4.entity.packages.BigPackage;
 import by.kosolobov.task4.entity.state.impl.DeliveredState;
 import by.kosolobov.task4.entity.state.impl.OrderedState;
 import by.kosolobov.task4.entity.state.impl.UnorderedState;
-import by.kosolobov.task4.entity.van.BaseVan;
-import by.kosolobov.task4.entity.van.SmallVan;
+import by.kosolobov.task4.entity.van.Van;
+import by.kosolobov.task4.entity.van.VanType;
 import by.kosolobov.task4.factory.PackageFactory;
-import by.kosolobov.task4.factory.VanFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ class LogisticBaseTest {
         assertInstanceOf(OrderedState.class, pkg1.getState());
         assertInstanceOf(OrderedState.class, pkg2.getState());
 
-        BaseVan van = new SmallVan();
+        Van van = new Van(VanType.SMALL);
         van.loadAll(packages);
         van.deliverTo(base);
 
@@ -60,14 +59,13 @@ class LogisticBaseTest {
             packages.add(packageFactory.getBigPackage());
         }
 
-        VanFactory vanFactory = new VanFactory();
-        List<BaseVan> vans = new ArrayList<>();
+        List<Van> vans = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            vans.add(vanFactory.getSmallVan());
+            vans.add(new Van(VanType.SMALL));
         }
 
         LogisticBase base = LogisticBase.getInstance();
-        for (BaseVan van : vans) {
+        for (Van van : vans) {
             van.loadAll(packages);
             van.deliverTo(base);
         }

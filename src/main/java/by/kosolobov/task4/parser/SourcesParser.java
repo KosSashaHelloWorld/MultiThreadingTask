@@ -2,8 +2,7 @@ package by.kosolobov.task4.parser;
 
 import by.kosolobov.task4.entity.packages.BasePackage;
 import by.kosolobov.task4.entity.packages.CustomPackage;
-import by.kosolobov.task4.entity.van.BaseVan;
-import by.kosolobov.task4.entity.van.CustomVan;
+import by.kosolobov.task4.entity.van.Van;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +34,17 @@ public class SourcesParser {
         return packages;
     }
 
-    public List<BaseVan> parseVans(List<String> source) {
-        List<BaseVan> vans = new ArrayList<>();
+    public List<Van> parseVans(List<String> source) {
+        List<Van> vans = new ArrayList<>();
         Pattern pattern = Pattern.compile(REGEX_INTEGER);
 
         for (String line : source) {
             if (line.matches(REGEX_VANS)) {
                 Matcher matcher = pattern.matcher(line);
 
-                int storage = 0;
+                int storageLimit = 0;
                 if (matcher.find()) {
-                    storage = Integer.parseInt(matcher.group());
+                    storageLimit = Integer.parseInt(matcher.group());
                 }
 
                 int speed = 0;
@@ -53,7 +52,7 @@ public class SourcesParser {
                     speed = Integer.parseInt(matcher.group());
                 }
 
-                vans.add(new CustomVan(storage, speed));
+                vans.add(new Van(storageLimit, speed));
             }
         }
 
