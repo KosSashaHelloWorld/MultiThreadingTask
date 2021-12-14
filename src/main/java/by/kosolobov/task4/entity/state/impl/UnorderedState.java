@@ -16,12 +16,12 @@ public class UnorderedState implements BoxState {
 
     @Override
     public void prev(Box pkg) {
-        log.log(Level.WARN, "Package is unordered.");
+        log.log(Level.WARN, "Box is unordered. Have no previous state.");
     }
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package is unordered");
+        log.log(Level.INFO, "Box is unordered.");
     }
 
     @Override

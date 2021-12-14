@@ -21,7 +21,7 @@ public class OrderedState implements BoxState {
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package was ordered, not delivered to office yet.");
+        log.log(Level.INFO, "Box was ordered, not delivered to office yet.");
     }
 
     @Override

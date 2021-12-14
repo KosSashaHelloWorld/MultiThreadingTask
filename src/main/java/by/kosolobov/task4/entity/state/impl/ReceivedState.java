@@ -11,7 +11,7 @@ public class ReceivedState implements BoxState {
 
     @Override
     public void next(Box pkg) {
-        log.log(Level.WARN, "Package was already received.");
+        log.log(Level.WARN, "Box was already received.");
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ReceivedState implements BoxState {
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package was received");
+        log.log(Level.INFO, "Box was received");
     }
 
     @Override

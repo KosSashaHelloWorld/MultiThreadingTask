@@ -21,7 +21,7 @@ public class DeliveredState implements BoxState {
 
     @Override
     public void printStatus() {
-        log.log(Level.INFO, "Package was delivered to office, waiting for receiver.");
+        log.log(Level.INFO, "Box was delivered to office, waiting for receiver.");
     }
 
     @Override
