@@ -10,18 +10,18 @@ public class OrderedState implements BoxState {
     private static final Logger log = LogManager.getLogger(OrderedState.class);
 
     @Override
-    public void next(Box pkg) {
-        pkg.setState(new DeliveredState());
+    public void next(Box box) {
+        box.setState(new DeliveredState());
     }
 
     @Override
-    public void prev(Box pkg) {
-        pkg.setState(new UnorderedState());
+    public void prev(Box box) {
+        box.setState(new UnorderedState());
     }
 
     @Override
-    public void printStatus() {
-        log.log(Level.INFO, "Box was ordered, not delivered to office yet.");
+    public void printStatus(Box box) {
+        log.log(Level.INFO, "{} was ordered, not delivered to office yet.", box);
     }
 
     @Override

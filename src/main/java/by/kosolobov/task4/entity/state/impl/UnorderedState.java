@@ -10,18 +10,18 @@ public class UnorderedState implements BoxState {
     private static final Logger log = LogManager.getLogger(UnorderedState.class);
 
     @Override
-    public void next(Box pkg) {
-        pkg.setState(new OrderedState());
+    public void next(Box box) {
+        box.setState(new OrderedState());
     }
 
     @Override
-    public void prev(Box pkg) {
-        log.log(Level.WARN, "Box is unordered. Have no previous state.");
+    public void prev(Box box) {
+        log.log(Level.WARN, "{} is unordered. Have no previous state.", box);
     }
 
     @Override
-    public void printStatus() {
-        log.log(Level.INFO, "Box is unordered.");
+    public void printStatus(Box box) {
+        log.log(Level.INFO, "{} is unordered.", box);
     }
 
     @Override

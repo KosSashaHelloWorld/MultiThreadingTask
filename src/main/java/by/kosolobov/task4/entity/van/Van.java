@@ -140,6 +140,6 @@ public class Van extends Thread {
 
     @Override
     public String toString() {
-        return String.format("%d-Van{storage:%d, speed:%d}", getId(), storageLimit, speed);
+        return String.format("Van-%d{storage:%d, speed:%d}", getId(), storageLimit, speed);
     }
 }

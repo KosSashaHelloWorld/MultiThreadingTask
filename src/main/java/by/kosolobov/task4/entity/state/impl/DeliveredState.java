@@ -10,18 +10,18 @@ public class DeliveredState implements BoxState {
     private static final Logger log = LogManager.getLogger(DeliveredState.class);
 
     @Override
-    public void next(Box pkg) {
-        pkg.setState(new ReceivedState());
+    public void next(Box box) {
+        box.setState(new ReceivedState());
     }
 
     @Override
-    public void prev(Box pkg) {
-        pkg.setState(new OrderedState());
+    public void prev(Box box) {
+        box.setState(new OrderedState());
     }
 
     @Override
-    public void printStatus() {
-        log.log(Level.INFO, "Box was delivered to office, waiting for receiver.");
+    public void printStatus(Box box) {
+        log.log(Level.INFO, "{} was delivered to office, waiting for receiver.", box);
     }
 
     @Override

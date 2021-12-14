@@ -10,18 +10,18 @@ public class ReceivedState implements BoxState {
     private static final Logger log = LogManager.getLogger(ReceivedState.class);
 
     @Override
-    public void next(Box pkg) {
-        log.log(Level.WARN, "Box was already received.");
+    public void next(Box box) {
+        log.log(Level.WARN, "{} was already received.", box);
     }
 
     @Override
-    public void prev(Box pkg) {
-        pkg.setState(new DeliveredState());
+    public void prev(Box box) {
+        box.setState(new DeliveredState());
     }
 
     @Override
-    public void printStatus() {
-        log.log(Level.INFO, "Box was received");
+    public void printStatus(Box box) {
+        log.log(Level.INFO, "{} was received", box);
     }
 
     @Override
