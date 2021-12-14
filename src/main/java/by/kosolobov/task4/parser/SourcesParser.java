@@ -1,7 +1,6 @@
 package by.kosolobov.task4.parser;
 
-import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.CustomPackage;
+import by.kosolobov.task4.entity.packages.Box;
 import by.kosolobov.task4.entity.van.Van;
 
 import java.util.ArrayList;
@@ -14,8 +13,8 @@ public class SourcesParser {
     private static final String REGEX_VANS = "v\\d+,\\d+";
     private static final String REGEX_INTEGER = "\\d+";
 
-    public List<BasePackage> parsePackages(List<String> source) {
-        List<BasePackage> packages = new ArrayList<>();
+    public List<Box> parsePackages(List<String> source) {
+        List<Box> packages = new ArrayList<>();
         Pattern pattern = Pattern.compile(REGEX_INTEGER);
 
         for (String line : source) {
@@ -27,7 +26,7 @@ public class SourcesParser {
                     weight = Integer.parseInt(matcher.group());
                 }
 
-                packages.add(new CustomPackage(weight));
+                packages.add(new Box(weight));
             }
         }
 

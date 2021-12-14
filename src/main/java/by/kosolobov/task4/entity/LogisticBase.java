@@ -1,6 +1,6 @@
 package by.kosolobov.task4.entity;
 
-import by.kosolobov.task4.entity.packages.BasePackage;
+import by.kosolobov.task4.entity.packages.Box;
 import by.kosolobov.task4.entity.van.Van;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -14,8 +14,8 @@ public class LogisticBase {
     private static final Logger log = LogManager.getLogger(LogisticBase.class);
     private static final ReentrantLock locker = new ReentrantLock(true);
     private static LogisticBase instance = null;
-    private final List<BasePackage> mainStorage = new ArrayList<>();
-    private final List<BasePackage> temporalStorage = new ArrayList<>();
+    private final List<Box> mainStorage = new ArrayList<>();
+    private final List<Box> temporalStorage = new ArrayList<>();
     private final List<Van> temporalGarage = new ArrayList<>();
     private final List<Van> mainGarage = new ArrayList<>();
     private Van currentVan;
@@ -32,11 +32,11 @@ public class LogisticBase {
         return instance;
     }
 
-    public List<BasePackage> getMainStorage() {
+    public List<Box> getMainStorage() {
         return mainStorage.subList(0, mainStorage.size());
     }
 
-    public List<BasePackage> getTemporalStorage() {
+    public List<Box> getTemporalStorage() {
         return temporalStorage.subList(0, temporalStorage.size());
     }
 
@@ -51,7 +51,7 @@ public class LogisticBase {
     public void unloadVan() {
         locker.lock();
         while (currentVan.hasPackages()) {
-            BasePackage deliveredPackage = currentVan.unload();
+            Box deliveredPackage = currentVan.unload();
             deliveredPackage.nextState();
             temporalStorage.add(deliveredPackage);
         }

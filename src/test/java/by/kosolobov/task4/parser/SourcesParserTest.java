@@ -1,7 +1,6 @@
 package by.kosolobov.task4.parser;
 
-import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.CustomPackage;
+import by.kosolobov.task4.entity.packages.Box;
 import by.kosolobov.task4.entity.van.Van;
 import by.kosolobov.task4.reader.SourcesReader;
 import org.junit.jupiter.api.Test;
@@ -18,10 +17,10 @@ class SourcesParserTest {
 
     @Test
     void parsePackages() {
-        BasePackage expected = new CustomPackage(500);
-        BasePackage pkg = parser.parsePackages(source).get(0);
+        Box expected = new Box(500);
+        Box box = parser.parsePackages(source).get(0);
 
-        assertEquals(expected, pkg);
+        assertEquals(expected, box);
     }
 
     @Test

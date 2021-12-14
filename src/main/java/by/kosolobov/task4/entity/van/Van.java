@@ -1,7 +1,7 @@
 package by.kosolobov.task4.entity.van;
 
 import by.kosolobov.task4.entity.LogisticBase;
-import by.kosolobov.task4.entity.packages.BasePackage;
+import by.kosolobov.task4.entity.packages.Box;
 import by.kosolobov.task4.sevice.VanService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +19,7 @@ public class Van extends Thread {
     final int storageLimit;
     final int speed;
     private static final TimeUnit unit = TimeUnit.MILLISECONDS;
-    private final List<BasePackage> storage = new ArrayList<>();
+    private final List<Box> storage = new ArrayList<>();
     private LogisticBase destination = null;
 
     public Van() {
@@ -48,20 +48,20 @@ public class Van extends Thread {
      * @deprecated
      */
     @Deprecated (since = "it was created")
-    public List<BasePackage> getStorage() {
+    public List<Box> getStorage() {
         return storage.subList(0, storage.size());
     }
 
-    public boolean hasSpaceFor(BasePackage pkg) {
+    public boolean hasSpaceFor(Box pkg) {
         int stored = 0;
-        for (BasePackage inVan : storage) {
+        for (Box inVan : storage) {
             stored += inVan.getWeight();
         }
 
         return stored + pkg.getWeight() <= storageLimit;
     }
 
-    private void load(BasePackage pkg) {
+    private void load(Box pkg) {
         if (hasSpaceFor(pkg)) {
             try {
                 unit.sleep(200);
@@ -72,12 +72,12 @@ public class Van extends Thread {
         }
     }
 
-    public void loadAll(List<BasePackage> packages) {
-        for (BasePackage pkg : packages) {
+    public void loadAll(List<Box> packages) {
+        for (Box pkg : packages) {
             load(pkg);
         }
 
-        for (BasePackage pkg : storage) {
+        for (Box pkg : storage) {
             packages.remove(pkg);
         }
     }
@@ -91,12 +91,12 @@ public class Van extends Thread {
         return !storage.isEmpty();
     }
 
-    public BasePackage unload() {
+    public Box unload() {
         if (storage.isEmpty()) {
             return null;
         }
 
-        BasePackage toUnload = storage.get(0);
+        Box toUnload = storage.get(0);
         try {
             unit.sleep(200);
         } catch (InterruptedException e) {

@@ -1,14 +1,24 @@
 package by.kosolobov.task4.entity.packages;
 
-import by.kosolobov.task4.entity.state.BasePackageState;
+import by.kosolobov.task4.entity.state.BoxState;
 import by.kosolobov.task4.entity.state.impl.UnorderedState;
 
-public abstract class BasePackage {
-    protected final int weight;
-    protected BasePackageState state = new UnorderedState();
+import static by.kosolobov.task4.entity.packages.BoxType.DEFAULT;
 
-    protected BasePackage(int weight) {
+public class Box {
+    private final int weight;
+    private BoxState state = new UnorderedState();
+
+    public Box() {
+        weight = DEFAULT.getWeight();
+    }
+
+    public Box(int weight) {
         this.weight = weight;
+    }
+
+    public Box(BoxType type) {
+        weight = type.getWeight();
     }
 
     public void printStatus() {
@@ -23,7 +33,7 @@ public abstract class BasePackage {
         state.prev(this);
     }
 
-    public void setState(BasePackageState newState) {
+    public void setState(BoxState newState) {
         state = newState;
     }
 
@@ -31,7 +41,7 @@ public abstract class BasePackage {
         return weight;
     }
 
-    public BasePackageState getState() {
+    public BoxState getState() {
         return state;
     }
 
@@ -40,7 +50,7 @@ public abstract class BasePackage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BasePackage that = (BasePackage) o;
+        Box that = (Box) o;
 
         return weight == that.weight;
     }

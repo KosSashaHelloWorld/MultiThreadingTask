@@ -1,7 +1,6 @@
 package by.kosolobov.task4.entity;
 
-import by.kosolobov.task4.entity.packages.BasePackage;
-import by.kosolobov.task4.entity.packages.BigPackage;
+import by.kosolobov.task4.entity.packages.Box;
 import by.kosolobov.task4.entity.state.impl.DeliveredState;
 import by.kosolobov.task4.entity.state.impl.OrderedState;
 import by.kosolobov.task4.entity.state.impl.ReceivedState;
@@ -17,7 +16,7 @@ class BasePackageTest {
     void getState() {
         //verifying package can change state forward and back
 
-        BasePackage pack = new BigPackage();
+        Box pack = new Box();
 
         assertInstanceOf(UnorderedState.class, pack.getState());
         pack.nextState();
@@ -37,7 +36,7 @@ class BasePackageTest {
 
     @Test
     void checkLogs() {
-        BasePackage pack = new BigPackage();
+        Box pack = new Box();
 
         pack.prevState();
         pack.printStatus();
