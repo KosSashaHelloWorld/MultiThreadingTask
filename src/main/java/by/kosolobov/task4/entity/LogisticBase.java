@@ -25,10 +25,13 @@ public class LogisticBase {
 
     public static LogisticBase getInstance() {
         locker.lock();
-        if (instance == null) {
-            instance = new LogisticBase();
+        try {
+            if (instance == null) {
+                instance = new LogisticBase();
+            }
+        } finally {
+            locker.unlock();
         }
-        locker.unlock();
         return instance;
     }
 
@@ -50,44 +53,53 @@ public class LogisticBase {
 
     public void unloadVan() {
         locker.lock();
-        while (currentVan.hasPackages()) {
-            Box deliveredPackage = currentVan.unload();
-            deliveredPackage.nextState();
-            temporalStorage.add(deliveredPackage);
+        try {
+            while (currentVan.hasPackages()) {
+                Box deliveredPackage = currentVan.unload();
+                deliveredPackage.nextState();
+                temporalStorage.add(deliveredPackage);
+            }
+
+            log.log(Level.INFO, "{} is unloaded.", currentVan);
+
+            mainGarage.add(currentVan);
+            currentVan = null;
+        } finally {
+            locker.unlock();
         }
-
-        log.log(Level.INFO, "{} is unloaded.", currentVan);
-
-        mainGarage.add(currentVan);
-        currentVan = null;
-        locker.unlock();
     }
 
     public void loadVan() {
         locker.lock();
-        if (currentVan == null && mainGarage.isEmpty()) {
-            log.log(Level.WARN, "There are no any free Van to load");
-            return;
-        } else if (currentVan == null) {
-            currentVan = mainGarage.get(0);
-            mainGarage.remove(currentVan);
+        try {
+            if (currentVan == null && mainGarage.isEmpty()) {
+                log.log(Level.WARN, "There are no any free Van to load");
+                return;
+            } else if (currentVan == null) {
+                currentVan = mainGarage.get(0);
+                mainGarage.remove(currentVan);
+            }
+
+            currentVan.loadAll(mainStorage);
+
+            log.log(Level.INFO, "{} is loaded.", currentVan);
+        } finally {
+            locker.unlock();
         }
-
-        currentVan.loadAll(mainStorage);
-
-        log.log(Level.INFO, "{} is loaded.", currentVan);
-        locker.unlock();
     }
 
     public void notifyVanArrived(Van van) {
         locker.lock();
-        if (currentVan == null) {
-            currentVan = van;
-        } else {
-            temporalGarage.add(van);
+        try {
+            if (currentVan == null) {
+                currentVan = van;
+            } else {
+                temporalGarage.add(van);
+            }
+            unloadVan();
+        } finally {
+            locker.unlock();
         }
-        unloadVan();
-        locker.unlock();
     }
 
     @Override
