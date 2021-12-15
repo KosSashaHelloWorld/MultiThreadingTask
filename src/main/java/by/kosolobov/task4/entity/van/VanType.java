@@ -1,62 +1,17 @@
 package by.kosolobov.task4.entity.van;
 
 public enum VanType {
-    EXPRESS {
-        @Override
-        public int getStorageLimit() {
-            return 80;
-        }
+    EXPRESS(200, 800),
+    SMALL(120, 200),
+    MEDIUM(90, 500),
+    BIG(60, 2000),
+    DEFAULT(120, 500);
 
-        @Override
-        public int getSpeed() {
-            return 200;
-        }
-    },
-    SMALL {
-        @Override
-        public int getStorageLimit() {
-            return 200;
-        }
+    final int speed;
+    final int storageLimit;
 
-        @Override
-        public int getSpeed() {
-            return 120;
-        }
-    },
-    MEDIUM {
-        @Override
-        public int getStorageLimit() {
-            return 500;
-        }
-
-        @Override
-        public int getSpeed() {
-            return 90;
-        }
-    },
-    BIG {
-        @Override
-        public int getStorageLimit() {
-            return 2000;
-        }
-
-        @Override
-        public int getSpeed() {
-            return 60;
-        }
-    },
-    DEFAULT {
-        @Override
-        public int getStorageLimit() {
-            return 500;
-        }
-
-        @Override
-        public int getSpeed() {
-            return 120;
-        }
-    };
-
-    public abstract int getStorageLimit();
-    public abstract int getSpeed();
+    VanType(int speed, int storageLimit) {
+        this.speed = speed;
+        this.storageLimit = storageLimit;
+    }
 }

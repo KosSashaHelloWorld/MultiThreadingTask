@@ -13,7 +13,7 @@ public class Box {
 
     public Box() {
         id = BoxIdGenerator.generate();
-        weight = DEFAULT.getWeight();
+        weight = DEFAULT.weight;
     }
 
     public Box(int weight) {
@@ -23,7 +23,7 @@ public class Box {
 
     public Box(BoxType type) {
         id = BoxIdGenerator.generate();
-        weight = type.getWeight();
+        weight = type.weight;
     }
 
     public void printStatus() {

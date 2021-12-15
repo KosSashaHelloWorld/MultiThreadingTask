@@ -23,13 +23,13 @@ public class Van extends Thread {
     private LogisticBase destination = null;
 
     public Van() {
-        storageLimit = DEFAULT.getStorageLimit();
-        speed = DEFAULT.getSpeed();
+        storageLimit = DEFAULT.storageLimit;
+        speed = DEFAULT.speed;
     }
 
     public Van(VanType type) {
-        storageLimit = type.getStorageLimit();
-        speed = type.getSpeed();
+        storageLimit = type.storageLimit;
+        speed = type.speed;
     }
 
     public Van(int storageLimit, int speed) {
